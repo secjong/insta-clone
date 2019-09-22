@@ -5,6 +5,7 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 
 import Home from "../components/Home";
 import Search from "../components/Search";
+import Detail from "../components/Detail";
 
 // const stackNavigator = createStackNavigator(
 //     {
@@ -45,6 +46,12 @@ const materialTopTabNavigator = createMaterialTopTabNavigator(
                         screen: Search,
                         navigationOptions: () => ({
                             title: `검색`,
+                        }),
+                    },
+                    Detail: {
+                        screen: Detail,
+                        navigationOptions: () => ({
+                            title: `상세`,
                         }),
                     },
                 }

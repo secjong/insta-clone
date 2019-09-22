@@ -11,16 +11,14 @@ import reducer from "../reducer";
  */
 export default (props) => {
 
-   const [ value, setValue ] = useState(props.navigation.getParam('str') || '');
+    const [ value, setValue ] = useState(props.navigation.getParam("str") || '');
 
-   const [ state, dispatch ] = useReducer(reducer, { value: '' });
+    const [ state, dispatch ] = useReducer(reducer, { value: '' });
 
     useEffect(() => {
-        alert("Search 마운트!!!");
-        console.log("Search props : ", props);
-        console.log("Search value : " , value);
+        alert("Detail 마운트!!!");
         return () => {
-            console.log("Search 컴포넌트 언마운트");
+            console.log("Detail 컴포넌트 언마운트");
         };
     });
 
@@ -30,7 +28,7 @@ export default (props) => {
 
     return (
         <View>
-            <Text>검색 입니다.</Text>
+            <Text>상세 입니다.</Text>
             <Text>{ value }</Text>
             <Text>{ state.value }</Text>
             <TouchableHighlight onPress={showProps}>
