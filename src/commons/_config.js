@@ -1,5 +1,5 @@
-const apiServerHost = 'http://172.30.1.5';
-const apiServierPort = '4000';
+const apiServerHost = 'http://222.110.138.69';
+const apiServierPort = '8888';
 
 export default {
     apiServerHost,

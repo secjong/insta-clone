@@ -13,7 +13,6 @@ import { mapStateToProps, mapDispatchToProps } from "../redux/actions/postAction
  * @method
  */
 const Home = (props) => {
-
   const [ userName, setUserName ] = useState('홍길동');
   const { loading, data, error } = useQuery(HOME_PAGE);
   let template = <Text></Text>;
