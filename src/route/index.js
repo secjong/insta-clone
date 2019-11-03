@@ -11,24 +11,11 @@ import Search from "../components/Search";
 import Camera from "../components/Camera";
 import Activity from "../components/Activity";
 import My from "../components/My";
+import Login from "../components/Login";
 
 const stackNavigator = createStackNavigator(
     {
-        Home: {
-            screen: Home
-        },
-        Search: {
-            screen: Search
-        },
-        Camera: {
-            screen: Camera
-        },
-        Activity: {
-            screen: Activity
-        },
-        My: {
-            screen: My
-        },
+        Home: Home
     }
 );
 
@@ -53,7 +40,7 @@ const materialTopTabNavigator = createMaterialTopTabNavigator(
                             },
                             showIcon: true
                         }
-                    },
+                    }
                 }
             ),
         },
@@ -104,6 +91,29 @@ const materialTopTabNavigator = createMaterialTopTabNavigator(
                     },
                 }
             )
+        },
+        Login: {
+            screen: createStackNavigator(
+                {
+                    Login: {
+                        screen: Login,
+                        navigationOptions: {
+                            title: "로그인",
+                            tabBarIcon: ({ focused, horizontal, tintColor }) => {
+                                return (
+                                    <React.Fragment>
+                                        <Image
+                                            style={{width: 50, height: 50}}
+                                            source={{uri: 'https://facebook.github.io/react-native/img/tiny_logo.png'}}
+                                        />
+                                    </React.Fragment>
+                                );
+                            },
+                            showIcon: true
+                        }
+                    }
+                }
+            ),
         },
     }, 
     {

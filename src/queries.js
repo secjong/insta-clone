@@ -3,11 +3,10 @@ import { gql } from "apollo-boost";
 
 export const HOME_PAGE = gql`
     query {
-        people {
+        listMember {
             id
             name
             age
-            gender
         }
-    }   
+    }
 `;

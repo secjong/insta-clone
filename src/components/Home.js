@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableHighlight, AsyncStorage } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import { connect } from 'react-redux';
 
@@ -15,11 +15,17 @@ import { mapStateToProps, mapDispatchToProps } from "../redux/actions/postAction
 const Home = (props) => {
   const [ userName, setUserName ] = useState('홍길동');
   const { loading, data, error } = useQuery(HOME_PAGE);
+
   let template = <Text></Text>;
-  if(data && data.people){
-    template = data.people.map((item, index) => 
-      <Text key={index}>{item.id} / {item.name}</Text>
+  if(data && data.listMember){
+    template = data.listMember.map((item, index) => 
+      <Text key={index}>{item.id} / {item.name} / {item.age}</Text>
     )
+  } else {
+    console.log(data);
+    // 로그인 안된 경우
+    // 로그인 화면으로 이동
+    props.navigation.navigate("Login");
   }
 
   useEffect(() => {
