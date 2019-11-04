@@ -128,5 +128,5 @@ export default {
     doFetch,
     getTimeFormat,
     postPicture,
-    postDocument
+    postDocument,
 }

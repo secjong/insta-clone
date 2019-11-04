@@ -10,3 +10,18 @@ export const HOME_PAGE = gql`
         }
     }
 `;
+
+export const LOGIN_PAGE_LOGIN = gql`
+    query login($id: String!) {
+        login
+    }
+`;
+
+export const GET_DOG_PHOTO = gql`
+  query Dog($breed: String!) {
+    dog(breed: $breed) {
+      id
+      displayImage
+    }
+  }
+`;

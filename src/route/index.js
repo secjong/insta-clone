@@ -12,109 +12,119 @@ import Camera from "../components/Camera";
 import Activity from "../components/Activity";
 import My from "../components/My";
 import Login from "../components/Login";
+import Join from "../components/Join";
+import AuthLoadingScreen from "../components/AuthLoadingScreen";
 
-const stackNavigator = createStackNavigator(
+
+
+
+
+/**
+ * Home 컴포넌트에 만든 네비
+ */
+const homeStackNavigator = createStackNavigator(
     {
-        Home: Home
+        Home: {
+            screen: Home,
+            navigationOptions: {
+                title: "홈",
+                tabBarIcon: ({ focused, horizontal, tintColor }) => {
+                    return (
+                        <React.Fragment>
+                            <Image
+                                style={{width: 50, height: 50}}
+                                source={{uri: 'https://facebook.github.io/react-native/img/tiny_logo.png'}}
+                            />
+                        </React.Fragment>
+                    );
+                },
+                showIcon: true
+            }
+        }
     }
 );
 
+/**
+ * Search 컴포넌트에 만든 네비
+ */
+const searchStackNavigator = createStackNavigator(
+    {
+        Search: {
+            screen: Search,
+            navigationOptions: () => ({
+                title: `검색`,
+            }),
+        },
+    },
+);
+
+/**
+ * Camera 컴포넌트에 만든 네비
+ */
+const cameraStackNavigator = createStackNavigator(
+    {
+        Camera: {
+            screen: Camera,
+            navigationOptions: () => ({
+                title: `카메라`,
+            }),
+        },
+    }
+);
+
+/**
+ * Activity 컴포넌트에 만든 네비
+ */
+const activityStackNavigator = createStackNavigator(
+    {
+        Activity: {
+            screen: Activity,
+            navigationOptions: () => ({
+                title: `활동`,
+            }),
+        },
+    }
+);
+
+/**
+ * My 컴포넌트에 만든 네비
+ */
+const MyStackNavigator = createStackNavigator(
+    {
+        My: {
+            screen: My,
+            navigationOptions: () => ({
+                title: `내게시글`,
+            }),
+        },
+    }
+);
+
+
+
+
+
+/**
+ * materialTopTabNavigator + stackNavigator 방식
+ * 모든 컴포넌트를 포함한 탭네비게이터 완성
+ */
 const materialTopTabNavigator = createMaterialTopTabNavigator(
     {
         Home: {
-            screen: createStackNavigator(
-                {
-                    Home: {
-                        screen: Home,
-                        navigationOptions: {
-                            title: "홈",
-                            tabBarIcon: ({ focused, horizontal, tintColor }) => {
-                                return (
-                                    <React.Fragment>
-                                        <Image
-                                            style={{width: 50, height: 50}}
-                                            source={{uri: 'https://facebook.github.io/react-native/img/tiny_logo.png'}}
-                                        />
-                                    </React.Fragment>
-                                );
-                            },
-                            showIcon: true
-                        }
-                    }
-                }
-            ),
+            screen: homeStackNavigator,
         },
         Search: {
-            screen: createStackNavigator(
-                {
-                    Search: {
-                        screen: Search,
-                        navigationOptions: () => ({
-                            title: `검색`,
-                        }),
-                    },
-                },
-            ),
+            screen: searchStackNavigator,
         },
         Camera: {
-            screen: createStackNavigator(
-                {
-                    Camera: {
-                        screen: Camera,
-                        navigationOptions: () => ({
-                            title: `카메라`,
-                        }),
-                    },
-                }
-            )
+            screen: cameraStackNavigator
         },
         Activity: {
-            screen: createStackNavigator(
-                {
-                    Activity: {
-                        screen: Activity,
-                        navigationOptions: () => ({
-                            title: `활동`,
-                        }),
-                    },
-                }
-            )
+            screen: activityStackNavigator
         },
         My: {
-            screen: createStackNavigator(
-                {
-                    My: {
-                        screen: My,
-                        navigationOptions: () => ({
-                            title: `내게시글`,
-                        }),
-                    },
-                }
-            )
-        },
-        Login: {
-            screen: createStackNavigator(
-                {
-                    Login: {
-                        screen: Login,
-                        navigationOptions: {
-                            title: "로그인",
-                            tabBarIcon: ({ focused, horizontal, tintColor }) => {
-                                return (
-                                    <React.Fragment>
-                                        <Image
-                                            style={{width: 50, height: 50}}
-                                            source={{uri: 'https://facebook.github.io/react-native/img/tiny_logo.png'}}
-                                        />
-                                    </React.Fragment>
-                                );
-                            },
-                            showIcon: true
-                        }
-                    }
-                }
-            ),
-        },
+            screen: MyStackNavigator
+        }
     }, 
     {
         initialRouteName: 'Home',
@@ -142,6 +152,44 @@ const materialTopTabNavigator = createMaterialTopTabNavigator(
     }
 );
 
+/**
+ * switchNavigator + materialTopTabNavigator + stackNavigator 방식
+ * 인증처리를 위해 switchNavigator로 감싸기
+ */
+// const AppStack = createStackNavigator({ Home: materialTopTabNavigator, Search: materialTopTabNavigator, Camera: materialTopTabNavigator, Activity: materialTopTabNavigator, My: materialTopTabNavigator });
+const AppStack = materialTopTabNavigator;
+const AuthStack = createStackNavigator(
+    {
+        Login: {
+            screen: Login,
+            navigationOptions: () => ({
+                title: `로그인`,
+            })
+        }
+    },
+    {
+        Join: {
+            screen: Join,
+            navigationOptions: () => ({
+                title: `회원가입`,
+            })
+        }
+    }
+);
+const switchNavigator = createSwitchNavigator(
+    {
+        AuthLoading: AuthLoadingScreen,
+        App: AppStack,
+        Auth: AuthStack,
+    }, {
+        initialRouteName: 'AuthLoading',
+    }
+)
+
+
+/**
+ * materialBorromTabNavigator 방식
+ */
 const materialBottomTabNavigator = createMaterialBottomTabNavigator(
     {
         Home: {
@@ -187,4 +235,4 @@ const materialBottomTabNavigator = createMaterialBottomTabNavigator(
     }
 );
   
-export default createAppContainer(materialTopTabNavigator);
+export default createAppContainer(switchNavigator);

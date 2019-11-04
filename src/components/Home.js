@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableHighlight, AsyncStorage } from 'react-native';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { connect } from 'react-redux';
 
 // 사용자정의모듈
@@ -21,11 +21,6 @@ const Home = (props) => {
     template = data.listMember.map((item, index) => 
       <Text key={index}>{item.id} / {item.name} / {item.age}</Text>
     )
-  } else {
-    console.log(data);
-    // 로그인 안된 경우
-    // 로그인 화면으로 이동
-    props.navigation.navigate("Login");
   }
 
   useEffect(() => {
@@ -48,6 +43,11 @@ const Home = (props) => {
     props.navigation.navigate("Search");
   }
 
+  const goToLogin = () => {
+    AsyncStorage.removeItem("userToken");
+    props.navigation.navigate("Auth");
+  }
+
   return (
     <View>
       
@@ -59,6 +59,11 @@ const Home = (props) => {
         <Text>등록</Text>
       </TouchableHighlight>
       <Text>{props.test}</Text>
+
+      <TouchableHighlight onPress={goToLogin}>
+        <Text>쿠키죽이고 로딩화면가기</Text>
+      </TouchableHighlight>
+
     </View>
   );
 

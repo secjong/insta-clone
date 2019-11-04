@@ -41,6 +41,8 @@ export default function App(props) {
 
   });
 
+  
+
   return (
     <ApolloProvider client={client}>
       <Provider store={store}>
@@ -49,12 +51,3 @@ export default function App(props) {
     </ApolloProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
