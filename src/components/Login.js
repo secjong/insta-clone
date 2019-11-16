@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AsyncStorage, StyleSheet, Text, View, TextInput, TouchableHighlight, Button } from 'react-native';
+import { AsyncStorage, Text, View, TextInput, TouchableHighlight, Button, Image, KeyboardAvoidingView } from 'react-native';
 import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
 import { connect } from 'react-redux';
 // import { ApolloConsumer } from 'react-apollo';
@@ -31,7 +31,7 @@ const Login = (props) => {
         try {
             await AsyncStorage.setItem("token", token);
         } catch (e) {
-            console.log('AsyncStorage Error: ' + e.message);
+            console.log("AsyncStorage Error: " + e.message);
         }
     }
 
@@ -41,7 +41,7 @@ const Login = (props) => {
             let token = await AsyncStorage.getItem("token");
             return token;
         } catch (e) {
-            console.log('AsyncStorage Error: ' + e.message);
+            console.log("AsyncStorage Error : " + e.message);
         }
     }
 
@@ -53,7 +53,7 @@ const Login = (props) => {
 
     // 회원가입 페이지로 이동
     const goJoinPage = () => {
-        props.navigation.navigate('Join');
+        props.navigation.navigate("Join");
     }
 
     useEffect(() => {
@@ -63,7 +63,7 @@ const Login = (props) => {
             // token 을 저장하자!
             setToken(data.login);
             // 이동하자
-            props.navigation.navigate('App');
+            props.navigation.navigate("App");
         }
         // 함수를 반환하면 함수의 내용이 unmount 되기 직전에 실행된다. 
         return () => {
@@ -72,9 +72,11 @@ const Login = (props) => {
     });
 
     
-
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+
+            <Image style={styles.image} source={require('../../assets/images/insta_logo.png')} />
+            
             <TextInput style={styles.textInput} value={id} placeholder="아이디" onChangeText={setId}></TextInput>
             <TextInput style={styles.textInput} value={password} placeholder="비밀번호" onChangeText={setPassword}></TextInput>
             
@@ -91,7 +93,7 @@ const Login = (props) => {
                 <Text style={styles.aText} onPress={() => {goJoinPage()}}>가입하기.</Text>
             </View>
             
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -21,6 +21,19 @@ const styles = StyleSheet.create({
         marginBottom: 3
     },
 
+    textInputWide: {
+        borderColor: '#000000',
+        borderStyle: 'solid',
+        borderWidth: 1,
+
+        width: '80%',
+        paddingLeft: 8,
+        borderRadius: 8,
+
+        marginTop: 3,
+        marginBottom: 3
+    },
+
     button: {
         width:'50%',
         borderRadius: 20,
@@ -35,6 +48,20 @@ const styles = StyleSheet.create({
     flexRow: {
         display: 'flex',
         flexDirection: 'row'
+    },
+
+    image: {
+        width: '50%',
+        resizeMode: 'contain',
+        marginBottom: -100
+    },
+
+    marginTop30: {
+        marginTop: 30
+    },
+
+    fontSize20: {
+        fontSize: 20
     }
 
 

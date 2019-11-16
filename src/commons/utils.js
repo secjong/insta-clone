@@ -129,6 +129,60 @@ const postDocument = () => {
     return fetch(apiUrl, options);
 }
 
+/** 
+ * 현재 날짜 가져오기
+ * @method
+ * @param
+ * @return {String}
+*/
+const getToday = () => {
+    const date = new Date(); 
+    let year = (date.getFullYear()).toString(); 
+    let month = (date.getMonth()+1).toString(); 
+    let day = (date.getDate()).toString(); 
+
+    // 한자리수일 경우 0을 채워준다. 
+    if(month.length == 1){ 
+        month = "0" + month; 
+    } 
+    if(day.length == 1){ 
+        day = "0" + day; 
+    } 
+    return (year + "" + month + "" + day);
+}
+
+/** 
+ * 현재 날짜로부터 일정 날짜 이전 날짜 구하기
+ * @method
+ * @param {Object} - y: 년, m: 월, d: 일
+ * @return {String}
+*/
+const getPastDate = ({y=0, m=0, d=0} = {}) => {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth();
+    let day = date.getDate();
+
+    // 입력받은 년/월/일을 더함
+    date.setFullYear(year + parseInt(y));
+    date.setMonth(month + parseInt(m));
+    date.setDate(day + parseInt(d));
+
+    year = (date.getFullYear()).toString();
+    month = (date.getMonth()+1).toString();
+    day = (date.getDate()).toString();
+
+    // 한자리수일 경우 0을 채워준다. 
+    if(month.length == 1){ 
+        month = "0" + month; 
+    } 
+    if(day.length == 1){
+        day = "0" + day; 
+    } 
+
+    return (year + "" + month + "" + day);
+}
+
 export default {
     isEmpty,
     getApiServer,
@@ -136,4 +190,6 @@ export default {
     getTimeFormat,
     postPicture,
     postDocument,
+    getToday,
+    getPastDate
 }
