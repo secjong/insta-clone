@@ -13,7 +13,7 @@ export const HOME_PAGE = gql`
 
 export const LOGIN_PAGE_LOGIN = gql`
     query login($id: String!) {
-        login
+      login(id: $id)
     }
 `;
 

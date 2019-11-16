@@ -8,8 +8,15 @@ import config from './_config';
  * @param
  * @return {String}
 */
+// const isEmpty = (value) => {
+//     if ((value == "" || value == null || value == undefined || (value != null && typeof value == "object" && !Object.keys(value).length)) && value != 0) {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// };
 const isEmpty = (value) => {
-    if ((value == "" || value == null || value == undefined || (value != null && typeof value == "object" && !Object.keys(value).length)) && value != 0) {
+    if (value == "" || value == null || value == undefined || ( value != null && typeof value == "object" && !Object.keys(value).length)) {
         return true;
     } else {
         return false;

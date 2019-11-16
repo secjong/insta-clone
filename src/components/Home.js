@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableHighlight, AsyncStorage } from 'react-native';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { StyleSheet, Text, View, TextInput, TouchableHighlight, AsyncStorage, Button } from 'react-native';
+import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
 import { connect } from 'react-redux';
 
 // 사용자정의모듈
 import utils from "../commons/utils";
-import { HOME_PAGE } from "../queries";
+import { HOME_PAGE, LOGIN_PAGE_LOGIN } from "../queries";
 import { mapStateToProps, mapDispatchToProps } from "../redux/actions/postAction";
 
 /**
@@ -14,7 +14,10 @@ import { mapStateToProps, mapDispatchToProps } from "../redux/actions/postAction
  */
 const Home = (props) => {
   const [ userName, setUserName ] = useState('홍길동');
+  const [ id, setId ] = useState("secjong"); // 아이디
+
   const { loading, data, error } = useQuery(HOME_PAGE);
+  const [login, { called, loading2, data2 }] = useLazyQuery(LOGIN_PAGE_LOGIN);
 
   let template = <Text></Text>;
   if(data && data.listMember){
@@ -24,19 +27,19 @@ const Home = (props) => {
   }
 
   useEffect(() => {
-    
     console.log("Home 마운트!");
     console.log("Home props : " , props);
-    
     props.navigation.addListener("didFocus", (e) => {
       // 홈탭 클릭시 목록 다시불러오기
     });
-
     return () => {
       console.log("Home 컴포넌트 언마운트");
     };
-
   });
+
+  const triggerLogin = () => {
+    login({ variables: { id: id } });
+  }
 
   // 서치탭으로 이동
   const goToSearch = () => {
@@ -44,7 +47,7 @@ const Home = (props) => {
   }
 
   const goToLogin = () => {
-    AsyncStorage.removeItem("userToken");
+    AsyncStorage.removeItem("token");
     props.navigation.navigate("Auth");
   }
 
@@ -63,6 +66,9 @@ const Home = (props) => {
       <TouchableHighlight onPress={goToLogin}>
         <Text>쿠키죽이고 로딩화면가기</Text>
       </TouchableHighlight>
+
+      <TextInput value={id} onChangeText={setId}></TextInput>
+      <Button title="로그인" onPress={() => {triggerLogin()}} />
 
     </View>
   );
