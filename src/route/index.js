@@ -20,6 +20,35 @@ import AuthLoadingScreen from "../components/AuthLoadingScreen";
 
 
 /**
+ * Login 컴포넌트에 만든 네비
+ */
+const loginStackNavigator = createStackNavigator(
+    {
+        Login: {
+            screen: Login,
+            navigationOptions: () => ({
+                title: `로그인`,
+            })
+        }
+    }
+);
+
+/**
+ * Join 컴포넌트에 만든 네비
+ */
+
+const joinStackNavigator = createStackNavigator(
+    {
+        Join: {
+            screen: Join,
+            navigationOptions: () => ({
+                title: `회원가입`,
+            })
+        }
+    }
+);
+
+/**
  * Home 컴포넌트에 만든 네비
  */
 const homeStackNavigator = createStackNavigator(
@@ -53,9 +82,9 @@ const searchStackNavigator = createStackNavigator(
             screen: Search,
             navigationOptions: () => ({
                 title: `검색`,
-            }),
-        },
-    },
+            })
+        }
+    }
 );
 
 /**
@@ -67,8 +96,8 @@ const cameraStackNavigator = createStackNavigator(
             screen: Camera,
             navigationOptions: () => ({
                 title: `카메라`,
-            }),
-        },
+            })
+        }
     }
 );
 
@@ -81,8 +110,8 @@ const activityStackNavigator = createStackNavigator(
             screen: Activity,
             navigationOptions: () => ({
                 title: `활동`,
-            }),
-        },
+            })
+        }
     }
 );
 
@@ -95,10 +124,17 @@ const MyStackNavigator = createStackNavigator(
             screen: My,
             navigationOptions: () => ({
                 title: `내게시글`,
-            }),
-        },
+            })
+        }
     }
 );
+
+
+
+
+
+
+
 
 
 
@@ -109,22 +145,29 @@ const MyStackNavigator = createStackNavigator(
  * 모든 컴포넌트를 포함한 탭네비게이터 완성
  */
 const materialTopTabNavigator = createMaterialTopTabNavigator(
+    // {
+    //     Home: {
+    //         screen: homeStackNavigator,
+    //     },
+    //     Search: {
+    //         screen: searchStackNavigator,
+    //     },
+    //     Camera: {
+    //         screen: cameraStackNavigator
+    //     },
+    //     Activity: {
+    //         screen: activityStackNavigator
+    //     },
+    //     My: {
+    //         screen: MyStackNavigator
+    //     }
+    // },
     {
-        Home: {
-            screen: homeStackNavigator,
-        },
-        Search: {
-            screen: searchStackNavigator,
-        },
-        Camera: {
-            screen: cameraStackNavigator
-        },
-        Activity: {
-            screen: activityStackNavigator
-        },
-        My: {
-            screen: MyStackNavigator
-        }
+        Home: homeStackNavigator,
+        Search: searchStackNavigator,
+        Camera: cameraStackNavigator,
+        Activity: activityStackNavigator,
+        My: MyStackNavigator
     }, 
     {
         initialRouteName: 'Home',
@@ -158,24 +201,47 @@ const materialTopTabNavigator = createMaterialTopTabNavigator(
  */
 // const AppStack = createStackNavigator({ Home: materialTopTabNavigator, Search: materialTopTabNavigator, Camera: materialTopTabNavigator, Activity: materialTopTabNavigator, My: materialTopTabNavigator });
 const AppStack = materialTopTabNavigator;
+
 const AuthStack = createStackNavigator(
     {
         Login: {
-            screen: Login,
-            navigationOptions: () => ({
-                title: `로그인`,
-            })
-        }
-    },
-    {
+            screen: loginStackNavigator,
+            navigationOptions: {
+                header: null
+            }
+        }, 
         Join: {
-            screen: Join,
-            navigationOptions: () => ({
-                title: `회원가입`,
-            })
+            screen: joinStackNavigator,
+            navigationOptions: {
+                header: null
+            }
         }
     }
+    // {
+    //     Login: {
+    //         screen: Login,
+    //         navigationOptions: () => ({
+    //             title: `로그인`,
+    //         })
+    //     }
+    // },
+    // {
+    //     Join: {
+    //         screen: Join,
+    //         navigationOptions: () => ({
+    //             title: `회원가입`,
+    //         })
+    //     }
+    // }
 );
+
+// const AuthStack = createSwitchNavigator(
+//     {
+//         Login: loginStackNavigator,
+//         Join: joinStackNavigator
+//     }
+// );
+
 const switchNavigator = createSwitchNavigator(
     {
         AuthLoading: AuthLoadingScreen,

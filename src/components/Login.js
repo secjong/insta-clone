@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableHighlight, AsyncStorage, Button } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, View, TextInput, TouchableHighlight, Button } from 'react-native';
 import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
 import { connect } from 'react-redux';
 // import { ApolloConsumer } from 'react-apollo';
@@ -8,20 +8,25 @@ import { connect } from 'react-redux';
 import { LOGIN_PAGE_LOGIN } from "../queries";
 import { mapStateToProps, mapDispatchToProps } from "../redux/actions/postAction";
 import utils from "../commons/utils";
+import styles from '../commons/styles';
 
 /**
  * 로그인컴포넌트
  * @method
  */
 const Login = (props) => {
-    const [ id, setId ] = useState("secjong123123"); // 아이디
+    const [ id, setId ] = useState("secjong"); // 아이디
+    const [ password, setPassword ] = useState(""); // 비밀번호
     // const [doLogin, { loading, error }] = useMutation(LOGIN_PAGE_LOGIN);
+
     const [login, { called, loading, data }] = useLazyQuery(LOGIN_PAGE_LOGIN);
 
+    // 로그인하기
     const triggerLogin = () => {
         login({ variables: { id: id } });
     }
 
+    // 앱의 AsyncStorage에 토큰 세팅하기
     const setToken = async (token) => {
         try {
             await AsyncStorage.setItem("token", token);
@@ -30,6 +35,7 @@ const Login = (props) => {
         }
     }
 
+    // 앱의 AsyncStorage에서 토큰 가져오기
     const getToken = async () => {
         try {
             let token = await AsyncStorage.getItem("token");
@@ -39,32 +45,52 @@ const Login = (props) => {
         }
     }
 
+    // 토큰 출력하기
     const consoleToken = async () => {
         let token = await getToken();
         console.log(token);
     }
 
+    // 회원가입 페이지로 이동
+    const goJoinPage = () => {
+        props.navigation.navigate('Join');
+    }
+
     useEffect(() => {
+        // 컴포넌트 마운트시 실행되는 내용
+        // 로그인 성공시
+        if(!utils.isEmpty(data) && !utils.isEmpty(data.login)){
+            // token 을 저장하자!
+            setToken(data.login);
+            // 이동하자
+            props.navigation.navigate('App');
+        }
         // 함수를 반환하면 함수의 내용이 unmount 되기 직전에 실행된다. 
         return () => {
 
         };
     });
 
-    // 로그인 성공시
-    if(!utils.isEmpty(data) && !utils.isEmpty(data.login)){
-        // token 을 저장하자!
-        setToken(data.login);
-        // 이동하자
-        props.navigation.navigate('App');
-    }
+    
 
     return (
-        <View>
-            <Text>로그인 입니다.</Text>
-            <TextInput value={id} onChangeText={setId}></TextInput>
-            <Button title="로그인" onPress={() => {triggerLogin()}} />
-            <Button title="토큰확인" onPress={() => {consoleToken()}} />
+        <View style={styles.container}>
+            <TextInput style={styles.textInput} value={id} placeholder="아이디" onChangeText={setId}></TextInput>
+            <TextInput style={styles.textInput} value={password} placeholder="비밀번호" onChangeText={setPassword}></TextInput>
+            
+            <TouchableHighlight style={styles.button}>
+                <Button title="로그인" onPress={() => {triggerLogin()}} />
+            </TouchableHighlight>
+            
+            <TouchableHighlight style={styles.button}>
+                <Button title="토큰확인" onPress={() => {consoleToken()}} />
+            </TouchableHighlight>
+
+            <View style={styles.flexRow}>
+                <Text>계정이 없으신가요?</Text>
+                <Text style={styles.aText} onPress={() => {goJoinPage()}}>가입하기.</Text>
+            </View>
+            
         </View>
     );
 }

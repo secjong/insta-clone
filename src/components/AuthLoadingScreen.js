@@ -26,7 +26,7 @@ export default (props) => {
     // Fetch the token from storage then navigate to our appropriate place
     _bootstrapAsync = async () => {
         const token = await AsyncStorage.getItem('token');
-        alert(token);
+        console.log(token);
 
         // This will switch to the App screen or Auth screen and this loading
         // screen will be unmounted and thrown away.
