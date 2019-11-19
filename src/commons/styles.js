@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#ffffff',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
 
     textInput: {
@@ -62,11 +62,12 @@ const styles = StyleSheet.create({
 
     fontSize20: {
         fontSize: 20
-    }
+    },
 
 
 
-    ,border: {
+
+    border: {
         borderColor: '#000000',
         borderStyle: 'solid',
         borderWidth: 1
