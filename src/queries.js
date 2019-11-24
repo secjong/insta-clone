@@ -12,8 +12,8 @@ export const HOME_PAGE = gql`
 `;
 
 export const LOGIN_PAGE_LOGIN = gql`
-    query login($id: String!) {
-      login(id: $id)
+    query login($id: String!, $password: String!) {
+      login(id: $id, password: $password)
     }
 `;
 
