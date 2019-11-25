@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     },
 
     textInput: {
-        borderColor: '#000000',
+        borderColor: '#f0f0f0',
         borderStyle: 'solid',
         borderWidth: 1,
 
@@ -18,11 +18,13 @@ const styles = StyleSheet.create({
         borderRadius: 8,
 
         marginTop: 3,
-        marginBottom: 3
+        marginBottom: 3,
+
+        backgroundColor: '#fbfbfb'
     },
 
     textInputWide: {
-        borderColor: '#000000',
+        borderColor: '#f0f0f0',
         borderStyle: 'solid',
         borderWidth: 1,
 
@@ -31,7 +33,9 @@ const styles = StyleSheet.create({
         borderRadius: 8,
 
         marginTop: 3,
-        marginBottom: 3
+        marginBottom: 3,
+
+        backgroundColor: '#fbfbfb'
     },
 
     button: {

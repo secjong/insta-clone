@@ -15,22 +15,19 @@ import styles from '../commons/styles';
  * @method
  */
 const Login = (props) => {
-    const [ id, setId ] = useState("secjong"); // 아이디
+    const [ id, setId ] = useState(""); // 아이디
     const [ password, setPassword ] = useState(""); // 비밀번호
     
     // const [login, { data, loading, error, called }] = useMutation(LOGIN_PAGE_LOGIN);
 
-    const [login, { called, loading, data }] = useLazyQuery(LOGIN_PAGE_LOGIN);
+    const [login, { called, loading, data, error }] = useLazyQuery(LOGIN_PAGE_LOGIN);
 
     let idElem = null; // 아이디입력란
     let passwordElem = null; // 패스워드입력란
 
     useEffect(() => {
         // 컴포넌트 마운트시 실행되는 내용
-
-        console.log("called : " , called);
-        console.log("loading : " , loading);
-        console.log("data : " , data);
+        props.navigation.navigate("App"); // 임시
 
         // 로그인 성공시
         if(!utils.isEmpty(data) && !utils.isEmpty(data.login)){
@@ -42,13 +39,15 @@ const Login = (props) => {
 
         if(called && !utils.isEmpty(data) && utils.isEmpty(data.login)){
             Alert.alert("", "일치하는 회원이 없습니다.", [{text: "네"}]);
+            setPassword("");
+            passwordElem.focus();
         }
         
         // 함수를 반환하면 함수의 내용이 unmount 되기 직전에 실행된다. 
         return () => {
 
         };
-    });
+    }, [data]);
 
     // 로그인하기
     const triggerLogin = () => {
@@ -57,10 +56,10 @@ const Login = (props) => {
         if(!isValid){
             return false;
         }
-        const data = {
+        const params = {
             id, password
         }
-        login({ variables: data });
+        login({ variables: params });
     }
 
     // 입력값 유효성검사
@@ -119,7 +118,7 @@ const Login = (props) => {
             <Image style={styles.image} source={require('../../assets/images/insta_logo.png')} />
             
             <TextInput style={styles.textInput} value={id} placeholder="아이디" onChangeText={setId} autoCapitalize={"none"} ref={(elem) => {idElem = elem}}></TextInput>
-            <TextInput style={styles.textInput} value={password} placeholder="비밀번호" onChangeText={setPassword} autoCapitalize={"none"} ref={(elem) => {passwordElem = elem}}></TextInput>
+            <TextInput style={styles.textInput} value={password} placeholder="비밀번호" onChangeText={setPassword} autoCapitalize={"none"} secureTextEntry={true} textContentType="password" ref={(elem) => {passwordElem = elem}}></TextInput>
             
             <TouchableHighlight style={styles.button}>
                 <Button title="로그인" onPress={() => {triggerLogin()}} />

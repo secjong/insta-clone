@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 // 사용자정의모듈
 import utils from "../commons/utils";
-import { HOME_PAGE, LOGIN_PAGE_LOGIN } from "../queries";
+import { HOME_PAGE } from "../queries";
 import { mapStateToProps, mapDispatchToProps } from "../redux/actions/postAction";
 
 /**
@@ -14,15 +14,14 @@ import { mapStateToProps, mapDispatchToProps } from "../redux/actions/postAction
  */
 const Home = (props) => {
   const [ userName, setUserName ] = useState('홍길동');
-  const [ id, setId ] = useState("secjong"); // 아이디
+  const [ id, setId ] = useState(""); // 아이디
 
   const { loading, data, error } = useQuery(HOME_PAGE);
-  const [login, { called, loading2, data2 }] = useLazyQuery(LOGIN_PAGE_LOGIN);
 
   let template = <Text></Text>;
   if(data && data.listMember){
     template = data.listMember.map((item, index) => 
-      <Text key={index}>{item.id} / {item.name} / {item.age}</Text>
+      <Text key={index}>{item.id} / {item.name} / {item.birth} / {item.gender}</Text>
     )
   }
 
@@ -37,15 +36,7 @@ const Home = (props) => {
     };
   });
 
-  const triggerLogin = () => {
-    login({ variables: { id: id } });
-  }
-
-  // 서치탭으로 이동
-  const goToSearch = () => {
-    props.navigation.navigate("Search");
-  }
-
+  // 로그인 화면으로 이동
   const goToLogin = () => {
     AsyncStorage.removeItem("token");
     props.navigation.navigate("Auth");
@@ -56,19 +47,14 @@ const Home = (props) => {
       
       {template}
 
-      <Text>{userName}</Text>
-      <TextInput value={userName} onChangeText={setUserName} />
-      <TouchableHighlight onPress={goToSearch}>
-        <Text>등록</Text>
-      </TouchableHighlight>
       <Text>{props.test}</Text>
+      <TextInput value={id} onChangeText={setId}></TextInput>
 
       <TouchableHighlight onPress={goToLogin}>
         <Text>쿠키죽이고 로딩화면가기</Text>
       </TouchableHighlight>
 
-      <TextInput value={id} onChangeText={setId}></TextInput>
-      <Button title="로그인" onPress={() => {triggerLogin()}} />
+      
 
     </View>
   );

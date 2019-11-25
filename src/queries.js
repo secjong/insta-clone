@@ -6,7 +6,8 @@ export const HOME_PAGE = gql`
         listMember {
             id
             name
-            age
+            birth
+            gender
         }
     }
 `;
